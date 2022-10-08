@@ -1,0 +1,12 @@
+{
+  "type": "module",
+  "name": "maxbetai_core",
+  "version": "1.0.0",
+  "description": "i am going to take money from maxbet",
+  "main": "./src/app.js",
+  "scripts": {
+    "test": "node ."
+  },
+  "author": "Nikola Icic",
+  "license": "ISC"
+}

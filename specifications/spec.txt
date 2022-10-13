@@ -1,0 +1,10 @@
+Basic project flow:
+- Create Core Entities
+- Random Game Generator
+- AI Agents
+- Genetic algorithm
+- First Tests! (v1)
+- Web API
+- Frontend -> Visual proof
+- Web Scraping for Games, Predictions & Results (v2)
+- Automated play (v3)

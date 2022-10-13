@@ -7,7 +7,7 @@ export default class Game {
         this.Result = null;
     }
 
-    GetPredictionResult(results) {
+    GetPredictionResults(results) {
         if (this.Predictions.length == results.length) {
             for (let i = 0; i < this.Predictions.length; i++)
                 this.Predictions[i].Result = results[i].Result;

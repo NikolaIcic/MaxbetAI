@@ -1,6 +1,6 @@
-import Ticket from "./core/Ticket.js";
-import Game from "./core/Game.js";
-import Prediction from "./core/Prediction.js";
+import Ticket from "./Domain/core/Ticket.js";
+import Game from "./Domain/core/Game.js";
+import Prediction from "./Domain/core/Prediction.js";
 
 let ticket = new Ticket();
 let game = new Game();

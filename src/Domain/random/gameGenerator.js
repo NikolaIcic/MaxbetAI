@@ -1,7 +1,7 @@
 import Game from '../core/Game.js';
 import Prediction from '../core/Prediction.js'
 
-const outcomes = ['N', '1', 'X', '2', 'GG', '2+', '3+', '0-2', '1X', '2X'];
+const outcomes = ['N', '1', 'X', '2', '2+','3+','0-2','GG'];
 
 export default class GameGenerator {
     constructor() {

@@ -168,7 +168,7 @@ export default class RandomGame {
                 else
                     t2++;
             }
-            if(res == 2){
+            if (res == 2) {
                 let t = t2;
                 t2 = t1;
                 t1 = t;
@@ -248,7 +248,7 @@ const getRandomArbitrary = (min, max) => {
 
 const getSecondHighestQuote = (min) => {
     let p = 100 / min;
-    let chance = p * (100 - p) - quoteGeneratorOffset;
+    let chance = p / 100 * (100 - p) - quoteGeneratorOffset;
     return getQuoteFromPercentChance(chance);
 }
 
@@ -276,5 +276,5 @@ const FxAtoB = (a, b, n) => {
 }
 
 const getGoalsChanceFromExpectedGoals = (a, b, min, max, expected) => {
-    return FxAtoB(a, b, expected) / FxAtoB(min, max, expected);
+    return FxAtoB(a, b, expected) * 100 / FxAtoB(min, max, expected);
 }

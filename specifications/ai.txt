@@ -1,10 +1,12 @@
 #Entities
     - Agent
+        - Name
         - Neural network
-        - Ticket
         - Money
         - StartingMoney
-        + Play Ticket
+        + Get Prediction
+        + Load Agent Data
+        + Save Agent Data
 
 #Evolution
     - Can create n Agents with random NN

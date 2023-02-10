@@ -2,20 +2,27 @@ import Ticket from "./Domain/core/Ticket.js";
 import Game from "./Domain/core/Game.js";
 import Prediction from "./Domain/core/Prediction.js";
 import RandomGame from "./Domain/random/randomGame.js";
+import Agent from "./Domain/ai/Agent.js";
 
-let ticket = new Ticket();
-let game = new Game();
-let pred1 = new Prediction();
+// let ticket = new Ticket();
+// let game = new Game();
+// let pred1 = new Prediction();
 
-pred1.Name = 'X';
-pred1.Quote = 1.5;
+// pred1.Name = 'X';
+// pred1.Quote = 1.5;
 
-game.Name = 'Test';
-game.Predicted = 0;
-game.Predictions.push(pred1);
+// game.Name = 'Test';
+// game.Predicted = 0;
+// game.Predictions.push(pred1);
 
-ticket.Games.push(game);
-//console.log(ticket.GetQuote());
+// ticket.Games.push(game);
+// console.log(ticket.GetQuote());
 
-let randomGame = new RandomGame();
-console.log(randomGame);
+// let randomGame = new RandomGame();
+// console.log(randomGame);
+
+let agent = new Agent();
+
+agent.getPrediction([1,2,3,4,3,2,1,2,2])
+
+console.log(agent.predictionIndex);

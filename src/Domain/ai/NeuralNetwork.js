@@ -19,7 +19,7 @@ export default class NeuralNetwork {
             this.Bias.push([]);
         for (let i = 0; i < NumOfInputs; i++)
             this.Bias[0].push(0);
-        for (let i = 0; i < NumOfHiddenLayers; i++)
+        for (let i = 1; i < NumOfHiddenLayers + 1; i++)
             for (let j = 0; j < NodesPerHL; j++)
                 this.Bias[i].push(0);
         for (let i = 0; i < NumOfOutputs; i++)
@@ -40,14 +40,27 @@ export default class NeuralNetwork {
 
     addInputValues(inputs) {
         if (NumOfInputs != inputs.length)
-            return console.log('Error: Number of inputs give does not match with NN');
+            throw Error('Error: Number of inputs given does not match with NN');
         for (let i = 0; i < inputs.length; i++)
             this.Bias[0][i] = inputs[i];
     }
 
-    getResult() {
-        // Calculate
-        // MAX(Bias[Bias.length-1])
+    calculateResult() {
+        for (let i = 1; i < this.Bias.length; i++)
+            for (let j = 0; j < this.Bias[i].length; j++)
+                for (let z = 0; z < this.Bias[i - 1].length; z++)
+                    this.Bias[i][j] += this.Bias[i - 1][z] * this.Weights[i - 1][j * this.Bias[i - 1].length + z];
+    }
+
+    getHighestOutputIndex() {
+        let value = -1;
+        let res = 0;
+        for (let i = 0; i < this.Bias[this.Bias.length - 1].length; i++)
+            if (this.Bias[this.Bias.length - 1][i] > value) {
+                res = i;
+                value = this.Bias[this.Bias.length - 1][i];
+            }
+        return res;
     }
 }
 

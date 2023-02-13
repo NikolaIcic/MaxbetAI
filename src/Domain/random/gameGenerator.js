@@ -8,6 +8,7 @@ export default class GameGenerator {
     CreateGames(count) {
         for (let i = 0; i < count; i++)
             this.Games.push(new RandomGame());
+        return this.Games;
     }
 }
 

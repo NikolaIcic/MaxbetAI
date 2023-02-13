@@ -14,7 +14,7 @@ export default class Game {
             this.Result = this.Predictions[this.Predicted].Result;
             return;
         }
-        console.log('On GetPredictionResult: Prediction lengths do not match');
+        throw Error('On GetPredictionResult: Prediction lengths do not match');
     }
 
     GetQuote() {

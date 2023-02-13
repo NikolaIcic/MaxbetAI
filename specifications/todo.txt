@@ -1,3 +1,15 @@
+- MAI:
+	- Create tickets
+	- Create a few Agents
+	- Predict
+
+- Evolution:
+	- Create random Agents
+	- Agents play tickets
+	- Calculate fitness
+	- New Agent generation
+	- Repeat
+
 - Random agent name (make as function so it is only called for save/load)
 - Save agent data (NN)
 - Load agent data (NN) 

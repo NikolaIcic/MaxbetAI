@@ -19,6 +19,7 @@ export default class RandomGame {
         this.triplus = 1;
         this.twoplus = 1;
         this.zerotwo = 1;
+        // this.gg not calculated properly
 
         this.resultHT = [0, 0];
         this.result = [0, 0];
@@ -97,6 +98,8 @@ export default class RandomGame {
         this.triplus = triplus;
         this.twoplus = getQuoteFromPercentChance(getGoalsChanceFromExpectedGoals(2, goalsMaxCap - 1, 0, goalsMaxCap, this.expG));
         this.zerotwo = getQuoteFromPercentChance(getGoalsChanceFromExpectedGoals(0, 2, 0, goalsMaxCap, this.expG));
+
+        // this.gg missing? not really it's in setPredictions() ...
     }
 
     setResults() {
@@ -230,7 +233,7 @@ export default class RandomGame {
                         p.Result = false;
                     break;
                 case 'GG':
-                    p.Quote = (this.twoplus + this.triplus) / 2 + 0.3;
+                    p.Quote = (this.twoplus + this.triplus) / 2 + 0.3; // ???
                     if (this.result[0] > 0 && this.result[1] > 0)
                         p.Result = true;
                     else

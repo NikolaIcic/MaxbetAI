@@ -2,21 +2,37 @@ import NeuralNetwork from "./NeuralNetwork.js"
 
 export default class Agent {
     constructor() {
-        this.name = 'Agent'
+        this.Name = 'Agent'
         this.NN = new NeuralNetwork();
-        this.gamesPlayed = 0;
-        this.predictions = [];
+        this.Ticket = null;
+        this.GamesPlayed = 0;
+        this.Predictions = [];
+        this.CurrentQuote = 1;
     }
 
-    getPrediction(inputs) {
-        inputs.push(this.gamesPlayed);
-        //inputs.push(totalQUote) // NEKVO NE VALJA
-        this.NN.addInputValues(inputs);
-        this.NN.calculateResult();
-        let prediction = this.NN.getHighestOutputIndex()
-        this.predictions.push(prediction);
-        if(prediction != 0)
-            this.gamesPlayed++;
+    predictTicketOutcome() {
+        this.GamesPlayed = 0;
+        this.Predictions = [];
+        this.CurrentQuote = 1;
+        this.Ticket.Games.forEach(game => {
+            let inputs = getPredictionInputs(game.predictions);
+            inputs.push(this.GamesPlayed);
+            inputs.push(this.CurrentQuote);
+            this.NN.addInputValues(inputs);
+            this.NN.calculateResult();
+            let resultIndex = this.NN.getHighestOutputIndex();
+            this.Predictions.push(resultIndex);
+            this.CurrentQuote *= game.predictions[resultIndex].Quote;
+            if(this.resultIndex > 0)
+                this.GamesPlayed++;
+        });
     }
+}
 
+const getPredictionInputs = (predictions) => {
+    let quotes = [];
+    predictions.forEach(prediction => {
+        quotes.push(prediction.Quote)
+    });
+    return quotes;
 }

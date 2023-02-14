@@ -22,29 +22,31 @@ export default class Mai {
     }
 
     learn(newTraining) {
+
+        // create new Agents
         if (newTraining)
             this.Evolution.createAgents(NumOfAgents);
 
-        // agents play ticket
+        // create new tickets
         this.createTickets();
+
+        // agents play tickets
         this.Tickets.forEach(ticket => {
-            let gamesCount = 0;
-            ticket.Games.forEach(game => {
-                let inputs = [];
-                game.predictions.forEach(prediction => {
-                    inputs.push(prediction.Quote);
-                });
-                
-                this.Evolution.agentPredictResult(game.predictions);
-            });
+            // agents play single ticket
+            this.Evolution.agentsPlayTicket(ticket);
+
+            // check results
+
+            // update Agent data (W/L etc...)
         });
-        // result
 
-        // fitness
+        // calculate fitness
 
-        // save data
+        // save data (Agent NN + statistics)
 
-        // learn
+        // evolve...
+
+        // learn...
     }
 
 }

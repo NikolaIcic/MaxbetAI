@@ -1,4 +1,4 @@
-import Agent from "./Agent";
+import Agent from "./Agent.js";
 
 export default class Evolution {
     constructor() {

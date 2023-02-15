@@ -21,9 +21,9 @@ export default class Agent {
             this.NN.addInputValues(inputs);
             this.NN.calculateResult();
             let resultIndex = this.NN.getHighestOutputIndex();
-            this.Predictions.push(resultIndex);
+            this.Predictions.push(game.predictions[resultIndex]); // create a complex object instead with more game data?
             this.CurrentQuote *= game.predictions[resultIndex].Quote;
-            if(this.resultIndex > 0)
+            if(resultIndex > 0)
                 this.GamesPlayed++;
         });
     }
@@ -31,8 +31,7 @@ export default class Agent {
 
 const getPredictionInputs = (predictions) => {
     let quotes = [];
-    predictions.forEach(prediction => {
-        quotes.push(prediction.Quote)
-    });
+    for(let i=1;i<predictions.length;i++)
+        quotes.push(predictions[i].Quote);
     return quotes;
 }

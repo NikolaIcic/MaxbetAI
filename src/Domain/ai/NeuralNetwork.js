@@ -4,6 +4,7 @@ const NumOfHiddenLayers = 2;
 const NodesPerHL = 8;
 const WeightMinValue = -1;
 const WeightMaxValue = 1;
+const InputDevisionFactor = 10;
 
 export default class NeuralNetwork {
     constructor() {
@@ -26,6 +27,11 @@ export default class NeuralNetwork {
             this.Bias[NumOfHiddenLayers + 1].push(0);
     }
 
+    clearBias() {
+        this.Bias = [];
+        this.setupBias();
+    }
+
     setupWeights() {
         for (let i = 0; i < NumOfHiddenLayers + 1; i++)
             this.Weights.push([]);
@@ -41,8 +47,10 @@ export default class NeuralNetwork {
     addInputValues(inputs) {
         if (NumOfInputs != inputs.length)
             throw Error('Error: Number of inputs given does not match with NN');
+            
+        this.clearBias()
         for (let i = 0; i < inputs.length; i++)
-            this.Bias[0][i] = inputs[i];
+            this.Bias[0][i] = inputs[i] / InputDevisionFactor;
     }
 
     calculateResult() {
@@ -55,7 +63,7 @@ export default class NeuralNetwork {
     getHighestOutputIndex() {
         let value = -1;
         let res = 0;
-        for (let i = 0; i < this.Bias[this.Bias.length - 1].length; i++)
+        for (let i = 0; i < NumOfOutputs; i++)
             if (this.Bias[this.Bias.length - 1][i] > value) {
                 res = i;
                 value = this.Bias[this.Bias.length - 1][i];

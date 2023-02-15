@@ -1,3 +1,7 @@
+- Test NN Weights
+
+- Check random game data
+
 - MAI:
 	- Create tickets
 	- Create a few Agents

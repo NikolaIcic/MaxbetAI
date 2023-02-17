@@ -9,4 +9,4 @@ let mai = new Mai();
 
 mai.learn(true);
 
-mai.test();
+//mai.test();

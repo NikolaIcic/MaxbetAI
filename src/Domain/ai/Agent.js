@@ -1,4 +1,6 @@
+import generateRandomName from "./generateRandomName.js";
 import NeuralNetwork from "./NeuralNetwork.js"
+import fs from 'fs'
 
 export default class Agent {
     constructor() {
@@ -53,6 +55,17 @@ export default class Agent {
                 this.HighestQuotePredicted = this.CurrentQuote;
         }
         this.TotalQuotesSum += this.CurrentQuote;
+    }
+
+    saveData() {
+        if (this.Name == 'Agent')
+            this.Name = generateRandomName();
+
+        fs.writeFile('./Agent1.txt','Hello world');
+    }
+
+    loadData() {
+
     }
 }
 

@@ -8,5 +8,8 @@
     "test": "node ."
   },
   "author": "Nikola Icic",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "random-names-generator": "^1.0.2"
+  }
 }

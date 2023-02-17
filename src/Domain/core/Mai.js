@@ -2,9 +2,10 @@ import Evolution from "../ai/Evolution.js";
 import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
 
-const NumOfAgents = 1;
-const TicketsPerRound = 1;
-const GamesPerTicket = 10;
+const NumOfAgents = 2;
+const TicketsPerRound = 10;
+const GamesPerTicket = 5;
+// cap: agent=200, tickets=500, games=10
 
 export default class Mai {
     constructor() {
@@ -29,13 +30,16 @@ export default class Mai {
         this.Tickets.forEach(ticket => {
             this.Evolution.agentsPlayTicket(ticket);
         });
+        this.Evolution.calculateAgentsFitness();
     }
-    
-    test(){
+
+    test() {
         this.Evolution.Agents.forEach(agent => {
-            console.log(agent.Predictions);
-            //console.log(agent.NN.Bias[3]);
+            //console.log(agent.Predictions);
+            console.log(agent.Fitness);
         });
     }
+
+
 
 }

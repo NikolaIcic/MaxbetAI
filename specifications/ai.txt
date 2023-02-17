@@ -14,3 +14,10 @@
     - After n rounds, calculate Agent Evaluation
     - Save scores
     - Run Genetic Algoritham 
+
+#Fitness
+    - Games predicted correct/total (+)(+)
+    - Tickets predicted correct/total (++)(+)
+    - Highest correct Quote predicted (+)(++)
+    - Average correct Quote predicted (+)(++)
+    + 2 models of Fitness function

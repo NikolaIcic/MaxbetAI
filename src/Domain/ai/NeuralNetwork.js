@@ -5,6 +5,8 @@ const NodesPerHL = 8;
 const WeightMinValue = -1;
 const WeightMaxValue = 1;
 const InputDevisionFactor = 10;
+const PrecisionMaxValue = 10;
+const PrecisionMinValue = -10;
 
 export default class NeuralNetwork {
     constructor() {
@@ -56,8 +58,13 @@ export default class NeuralNetwork {
     calculateResult() {
         for (let i = 1; i < this.Bias.length; i++)
             for (let j = 0; j < this.Bias[i].length; j++)
-                for (let z = 0; z < this.Bias[i - 1].length; z++)
+                for (let z = 0; z < this.Bias[i - 1].length; z++){
                     this.Bias[i][j] += this.Bias[i - 1][z] * this.Weights[i - 1][j * this.Bias[i - 1].length + z];
+                    if(this.Bias[i][j] > PrecisionMaxValue)
+                        this.Bias[i][j] = PrecisionMaxValue;
+                    else if(this.Bias[i][j] < PrecisionMinValue)
+                        this.Bias[i][j] = PrecisionMinValue;
+                }
     }
 
     getHighestOutputIndex() {

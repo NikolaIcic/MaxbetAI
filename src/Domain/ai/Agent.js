@@ -57,15 +57,30 @@ export default class Agent {
         this.TotalQuotesSum += this.CurrentQuote;
     }
 
-    saveData() {
+    saveData(filepath) {
         if (this.Name == 'Agent')
             this.Name = generateRandomName();
 
-        fs.writeFile('./Agent1.txt','Hello world');
+        let text = this.Name + '\n';
+        this.NN.Weights.forEach(WeightLevel => {
+            WeightLevel.forEach(weight => {
+                text += weight + ',';
+            });
+        });
+        fs.writeFile(filepath, text, () => { });
     }
 
-    loadData() {
+    async loadData(filepath) {
+        let data = fs.readFileSync(filepath, 'utf8', function (err, data) {
+            if (err) throw err;
+            return data;
 
+
+        });
+        let agentData = data.split('\n');
+        this.Name = agentData[0];
+        let weights = agentData[1].split(',');
+        this.NN.setWeights(agentData[1].split(','));
     }
 }
 

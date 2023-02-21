@@ -1,3 +1,11 @@
-- Random agent name (make as function so it is only called for save/load)
-- Save agent data (NN)
-- Load agent data (NN) 
+- Backend development
+
+- Frontend development
+
+- Logic development:
+    - Aggressiveness
+    - CombinationC new method (A + B / 2)
+    - CombinationD (A OR B)
+    - Speed up code/ remove unnecessary assignments
+    - Paralel processing / multithreading
+    - Enchance randomGame algorithm

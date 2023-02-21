@@ -1,13 +1,88 @@
 import Agent from "./Agent.js";
 
+const topAgentsCount = 5;
+
 export default class Evolution {
     constructor() {
         this.Agents = [];
     }
 
-    createAgents(count) {
+    createNewAgents(count) {
         for (let i = 0; i < count; i++)
             this.Agents.push(new Agent());
+    }
+
+    createNextGenerationAgents(count, property) {
+        this.Agents.sort((a, b) => b[property] - a[property]);
+        let topCount = topAgentsCount;
+        if (count < topCount)
+            topCount = count / 2;
+        this.Agents.splice(topCount);
+        let evoCount = (count / 2 - topCount);
+        for (let i = 0; i < evoCount; i++) {
+            let rand = getRandomInteger(1, 4);
+            switch (rand) {
+                case 1:
+                    this.createCombinationA(topCount);
+                    break;
+                case 2:
+                    this.createCombinationB(topCount);
+                    break;
+                case 3:
+                    this.createCombinationB(topCount); // change this to C
+                    break;
+                case 4:
+                    this.createMutation(topCount);
+                    break;
+            }
+        }
+        this.createNewAgents(count / 2);
+    }
+
+    createCombinationA(count) {
+        let agent = new Agent();
+        let rand = getRandomInteger(0, count - 1);
+        agent.NN.Weights = { ...this.Agents[rand].NN.Weights };
+        for (let i = 0; i < agent.NN.Weights.length; i++)
+            for (let j = 0; j < agent.NN.Weights[i].length; j++)
+                if (getRandomArbitrary(0, 1) > 0.8)
+                    agent.NN.Weights[i][j] = getRandomArbitrary(-1.2, 1.2);
+        this.Agents.push(agent);
+    }
+    createCombinationB(count) {
+        let agent = new Agent();
+        let rand = getRandomInteger(0, count - 1);
+        agent.NN.Weights = { ...this.Agents[rand].NN.Weights };
+        for (let i = 0; i < agent.NN.Weights.length; i++)
+            for (let j = 0; j < agent.NN.Weights[i].length; j++)
+                if (getRandomArbitrary(0, 1) > 0.6)
+                    agent.NN.Weights[i][j] += getRandomArbitrary(-0.3, 0.3);
+        this.Agents.push(agent);
+    }
+    createCombinationC(count) {
+        // needs to be more chaotic or combined with agents from another fitness function
+    }
+    createMutation(count) {
+        let agent = new Agent();
+        let rand = getRandomInteger(0, count - 1);
+        agent.NN.Weights = { ...this.Agents[rand].NN.Weights };
+        for (let i = 0; i < agent.NN.Weights.length; i++)
+            for (let j = 0; j < agent.NN.Weights[i].length; j++)
+                if (getRandomArbitrary(0, 1) > 0.9)
+                    agent.NN.Weights[i][j] *= -1;
+        this.Agents.push(agent);
+    }
+
+    loadAgents(count, folderPath) {
+        for (let i = 0; i < count; i++)
+            this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '.txt');
+        this.createNewAgents(count - topAgentsCount);
+    }
+
+    saveAgents(folderPath, count, property) {
+        this.Agents.sort((a, b) => b[property] - a[property]);
+        for (let i = 0; i < count; i++)
+            this.Agents[i].saveData(folderPath + '/Agent' + (i + 1) + '.txt');
     }
 
     agentsPlayTicket(ticket) {
@@ -23,17 +98,25 @@ export default class Evolution {
             let gameWR = agent.CorrectGamePredictions / agent.TotalGames;
             let ticketWR = agent.CorrectTicketPredictions / agent.TotalTickets;
             let averageQuote = agent.TotalQuotesSum / agent.TotalTickets;
-            if(averageQuote > 25)
+            if (averageQuote > 25)
                 averageQuote = 25;
             let highestCorrect = agent.HighestQuotePredicted;
-            if(highestCorrect > 100)
+            if (highestCorrect > 100)
                 highestCorrect = 100;
 
             fitness += gameWR * 3000;
             fitness += ticketWR * 10000;
-            fitness += averageQuote * 50; 
+            fitness += averageQuote * 50;
             fitness += highestCorrect * 10;
             agent.Fitness = fitness;
         });
     }
+}
+
+const getRandomInteger = (min, max) => {
+    return Math.floor(Math.random() * max) + min
+}
+
+const getRandomArbitrary = (min, max) => {
+    return Math.random() * (max - min) + min;
 }

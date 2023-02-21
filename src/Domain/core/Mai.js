@@ -2,9 +2,10 @@ import Evolution from "../ai/Evolution.js";
 import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
 
-const NumOfAgents = 2;
-const TicketsPerRound = 10;
-const GamesPerTicket = 5;
+const NumOfAgents = 200;
+const TicketsPerRound = 500;
+const GamesPerTicket = 6;
+const TopAgents = 5;
 // cap: agent=200, tickets=500, games=10
 
 export default class Mai {
@@ -14,6 +15,7 @@ export default class Mai {
     }
 
     createTickets() {
+        this.Tickets = [];
         for (let i = 0; i < TicketsPerRound; i++) {
             let ticket = new Ticket();
             for (let j = 0; j < GamesPerTicket; j++)
@@ -23,21 +25,35 @@ export default class Mai {
     }
 
     learn(newTraining) {
-        if (newTraining)
-            this.Evolution.createAgents(NumOfAgents);
+        this.Evolution.createNewAgents(NumOfAgents);
 
-        this.createTickets();
-        this.Tickets.forEach(ticket => {
-            this.Evolution.agentsPlayTicket(ticket);
-        });
-        this.Evolution.calculateAgentsFitness();
+        if (!newTraining)
+            this.Evolution.loadAgents(TopAgents, './Agents');
+
+        let generations = 0;
+        while (generations < 200) {
+            this.createTickets();
+            this.Tickets.forEach(ticket => {
+                this.Evolution.agentsPlayTicket(ticket);
+            });
+            this.Evolution.calculateAgentsFitness();
+            this.Evolution.createNextGenerationAgents(NumOfAgents, 'Fitness');
+            generations++;
+            console.log('Generation ' + generations + ' has been created!');
+        }
+        this.test();
     }
 
     test() {
         this.Evolution.Agents.forEach(agent => {
             //console.log(agent.Predictions);
-            console.log(agent.Fitness);
+            //console.log(agent.Fitness);
+            console.log(agent.Name, agent.Fitness);
         });
+    }
+
+    test2() {
+        this.Evolution.saveAgents('./Agents', NumOfAgents, 'Fitness');
     }
 
 

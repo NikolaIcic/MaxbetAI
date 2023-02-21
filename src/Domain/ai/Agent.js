@@ -70,16 +70,13 @@ export default class Agent {
         fs.writeFile(filepath, text, () => { });
     }
 
-    async loadData(filepath) {
+    loadData(filepath) {
         let data = fs.readFileSync(filepath, 'utf8', function (err, data) {
             if (err) throw err;
             return data;
-
-
         });
         let agentData = data.split('\n');
         this.Name = agentData[0];
-        let weights = agentData[1].split(',');
         this.NN.setWeights(agentData[1].split(','));
     }
 }

@@ -89,7 +89,6 @@ export default class NeuralNetwork {
                 n++;
             });
         });
-        console.log(this.Weights);
     }
 }
 

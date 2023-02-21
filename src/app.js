@@ -12,8 +12,7 @@ mai.learn(true);
 
 //mai.test();
 
-let agent = new Agent();
-agent.loadData('./Agents/Agent1.txt')
+// let agent = new Agent();
+// agent.loadData('./Agents/Agent1.txt')
 
 //agent.saveData('./Agents/Agent1.txt');
-

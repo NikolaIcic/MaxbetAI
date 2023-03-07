@@ -31,7 +31,7 @@ export default class Mai {
             this.Evolution.loadAgents(TopAgents, './Agents');
 
         let generations = 0;
-        while (generations < 200) {
+        while (generations < 10) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
@@ -39,9 +39,9 @@ export default class Mai {
             this.Evolution.calculateAgentsFitness();
             this.Evolution.createNextGenerationAgents(NumOfAgents, 'Fitness');
             generations++;
-            console.log('Generation ' + generations + ' has been created!');
+            console.log('Generation ' + generations);
         }
-        this.test();
+        //this.Evolution.saveAgents('./Agents', TopAgents, 'Fitness');
     }
 
     test() {
@@ -55,7 +55,5 @@ export default class Mai {
     test2() {
         this.Evolution.saveAgents('./Agents', NumOfAgents, 'Fitness');
     }
-
-
 
 }

@@ -1,18 +1,28 @@
-import RandomGame from "./Domain/random/randomGame.js";
 import Mai from "./Domain/core/Mai.js";
-import NeuralNetwork from "./Domain/ai/NeuralNetwork.js";
-import Agent from "./Domain/ai/Agent.js";
+import express from "express";
+import { Worker } from 'worker_threads';
 
-// let randomGame = new RandomGame();
-// console.log(randomGame);
+const app = express()
+const port = 3690;
 
-let mai = new Mai();
+app.get('/mai/start', (req, res) => {
+    res.send('Mai started learning');
+    const worker = new Worker('./src/Workers/learning.js', {
+        workerData: {
+            newTraining: true
+        }
+    });
+    worker.on('message', (result) => {
+        res.send('Learning done',result);
+    })
+})
 
-mai.learn(true);
+app.get('/mai/test', (req, res) => {
+    const mai = new Mai();
+    mai.learn(true);
+    res.send('Test done');
+})
 
-//mai.test();
-
-// let agent = new Agent();
-// agent.loadData('./Agents/Agent1.txt')
-
-//agent.saveData('./Agents/Agent1.txt');
+app.listen(port, () => {
+    console.log(`Mai app hosted on port ${port}`)
+})

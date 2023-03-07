@@ -13,14 +13,14 @@ app.get('/mai/start', (req, res) => {
         }
     });
     worker.on('message', (result) => {
-        res.send('Learning done',result);
+        console.log(result);
     })
 })
 
 app.get('/mai/test', (req, res) => {
     const mai = new Mai();
-    mai.learn(true);
-    res.send('Test done');
+    mai.test2();
+    res.send('Test Done');
 })
 
 app.listen(port, () => {

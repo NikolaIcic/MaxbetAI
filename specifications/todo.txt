@@ -1,5 +1,6 @@
 - Backend development
-
+    - Start mai endpoint
+    - Get agents data
 - Frontend development
 
 - Logic development:
@@ -9,3 +10,4 @@
     - Speed up code/ remove unnecessary assignments
     - Paralel processing / multithreading
     - Enchance randomGame algorithm
+    - Agents statistic data

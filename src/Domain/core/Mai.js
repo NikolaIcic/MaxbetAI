@@ -6,6 +6,7 @@ const NumOfAgents = 200;
 const TicketsPerRound = 500;
 const GamesPerTicket = 6;
 const TopAgents = 5;
+const SaveAgentsInterval = 8;
 // cap: agent=200, tickets=500, games=10
 
 export default class Mai {
@@ -31,17 +32,22 @@ export default class Mai {
             this.Evolution.loadAgents(TopAgents, './Agents');
 
         let generations = 0;
+        let saveCounter = 0;
         while (generations < 10) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
             });
+
             this.Evolution.calculateAgentsFitness();
-            this.Evolution.createNextGenerationAgents(NumOfAgents, 'Fitness');
+            if (saveCounter == SaveAgentsInterval) {
+                this.Evolution.saveAgents('./Agents', TopAgents, 'Fitness');
+                saveCounter = 0;
+            }
+            this.Evolution.createNextGenerationAgents(NumOfAgents - TopAgents, TopAgents, 'Fitness');
             generations++;
-            console.log('Generation ' + generations);
+            saveCounter++;
         }
-        //this.Evolution.saveAgents('./Agents', TopAgents, 'Fitness');
     }
 
     test() {
@@ -53,7 +59,7 @@ export default class Mai {
     }
 
     test2() {
-        this.Evolution.saveAgents('./Agents', NumOfAgents, 'Fitness');
+        console.log('testing...');
     }
 
 }

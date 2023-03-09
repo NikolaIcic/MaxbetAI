@@ -1,13 +1,15 @@
 - Backend development
-    - Start mai endpoint
     - Get agents data
+    - Pass TAG ratio as parameter
+
 - Frontend development
 
 - Logic development:
-    - Aggressiveness
+    - Agents statistic data
+    - Aggresion
+    - Earning
     - CombinationC new method (A + B / 2)
     - CombinationD (A OR B)
     - Speed up code/ remove unnecessary assignments
     - Paralel processing / multithreading
     - Enchance randomGame algorithm
-    - Agents statistic data

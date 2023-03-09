@@ -1,7 +1,7 @@
 import Mai from '../Domain/core/Mai.js';
-import { parentPort,workerData } from 'worker_threads'
+import { parentPort, workerData } from 'worker_threads'
 
 const mai = new Mai();
 console.log('started learning...');
-mai.learn(workerData.newTraining);
+mai.learn(workerData.newTraining, workerData.folderName);
 parentPort.postMessage('Jobs done!');

@@ -9,7 +9,8 @@ app.get('/mai/start', (req, res) => {
     res.send('Mai started learning');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
-            newTraining: true
+            newTraining: true,
+            folderName: 'TestGeneration'
         }
     });
     worker.on('message', (result) => {

@@ -1,4 +1,5 @@
 import Agent from "./Agent.js";
+import fs from 'fs'
 
 export default class Evolution {
     constructor() {
@@ -74,14 +75,18 @@ export default class Evolution {
 
     loadAgents(count, folderPath) {
         for (let i = 0; i < count; i++)
-            this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '.txt');
+            this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '/data.txt');
         this.createNewAgents(count - topAgentsCount);
     }
 
     saveAgents(folderPath, count, property) {
+        if(!fs.existsSync(folderPath))
+            fs.mkdirSync(folderPath)
         this.Agents.sort((a, b) => b[property] - a[property]);
-        for (let i = 0; i < count; i++)
+        for (let i = 0; i < count; i++){
             this.Agents[i].saveData(folderPath + '/Agent' + (i + 1) + '.txt');
+            this.Agents[i].saveStats(folderPath + '/Agent' + (i + 1) + '.json');
+        }
     }
 
     agentsPlayTicket(ticket) {

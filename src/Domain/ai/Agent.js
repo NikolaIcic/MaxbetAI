@@ -11,6 +11,7 @@ export default class Agent {
         this.GamesPlayed = 0;
         this.Predictions = [];
         this.CurrentQuote = 1;
+        this.TicketsPlayed = [];
 
         this.TotalGames = 0;
         this.TotalTickets = 0;
@@ -34,7 +35,7 @@ export default class Agent {
 
             let resultIndex = this.NN.getHighestOutputIndex();
             let result = game.predictions[resultIndex];
-            this.Predictions.push(result); // create a complex object instead with more game data?
+            this.Predictions.push(result);
             this.CurrentQuote *= result.Quote;
             if (resultIndex > 0)
                 this.GamesPlayed++;
@@ -55,6 +56,11 @@ export default class Agent {
                 this.HighestQuotePredicted = this.CurrentQuote;
         }
         this.TotalQuotesSum += this.CurrentQuote;
+
+        this.TicketsPlayed.push({
+            ticket: this.Ticket,
+            predictions: this.Predictions
+        });
     }
 
     saveData(filepath) {
@@ -78,6 +84,17 @@ export default class Agent {
         let agentData = data.split('\n');
         this.Name = agentData[0];
         this.NN.setWeights(agentData[1].split(','));
+    }
+
+    saveStats(filepath) {
+        let data = JSON.stringify(this.TicketsPlayed);
+        fs.writeFile(filepath, data, () => { });
+        this.TicketsPlayed = [];
+    }
+
+    loadStats(filepath) {
+        let rawdata = fs.readFileSync(filepath);
+        this.TicketsPlayed = JSON.parse(rawdata);
     }
 }
 

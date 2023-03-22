@@ -87,14 +87,13 @@ export default class Agent {
     }
 
     saveStats(filepath) {
-        let data = JSON.stringify(this.TicketsPlayed);
+        let stats = {
+            agentName: this.Name,
+            tickets: this.TicketsPlayed
+        };
+        let data = JSON.stringify(stats);
         fs.writeFile(filepath, data, () => { });
         this.TicketsPlayed = [];
-    }
-
-    loadStats(filepath) {
-        let rawdata = fs.readFileSync(filepath);
-        this.TicketsPlayed = JSON.parse(rawdata);
     }
 }
 

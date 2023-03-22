@@ -1,6 +1,8 @@
 import Evolution from "../ai/Evolution.js";
 import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
+import fs from 'fs';
+import AgentStats from "../ai/AgentStats.js";
 
 const NumOfAgents = 100;
 const TicketsPerRound = 100;
@@ -32,7 +34,7 @@ export default class Mai {
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 100) {
+        while (generations < 20) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
@@ -47,6 +49,27 @@ export default class Mai {
             generations++;
             saveCounter++;
         }
+    }
+
+    getAgentGroups() {
+
+    }
+
+    getAgents(group) {
+        if (!fs.existsSync('./Agents/' + group))
+            return 'Group not found';
+
+        let agents = [];
+        for (let i = 0; i < TopAgents; i++)
+            agents.push(this.loadAgentStats('./Agents/' + group + '/Agent' + (i + 1) + '.json'))
+        return agents;
+    }
+
+    loadAgentStats(filepath) {
+        let rawdata = fs.readFileSync(filepath);
+        let data = JSON.parse(rawdata);
+        let stats = new AgentStats(data.agentName, data.tickets);
+        return stats;
     }
 
     test() {

@@ -30,11 +30,11 @@ export default class Mai {
         this.Evolution.createNewAgents(NumOfAgents);
 
         if (!newTraining)
-            this.Evolution.loadAgents(NumOfAgents,TopAgents, './Agents/' + folderName);
+            this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 50) {
+        while (generations < 20) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);

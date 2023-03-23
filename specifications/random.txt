@@ -1,4 +1,0 @@
-#Entities
-    - GameGenerator
-        - Games
-        + Create Games

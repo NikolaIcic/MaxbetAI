@@ -1,10 +1,8 @@
 - Backend development
-    - Pass TAG ratio as parameter
-
+    - Fix slow learning run time when loading old agent data
 - Frontend development
 
 - Logic development:
-    - Agents statistic data
     - Aggresion
     - Earning
     - CombinationC new method (A + B / 2)

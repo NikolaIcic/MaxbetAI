@@ -73,8 +73,7 @@ export default class Evolution {
                 agent1.NN.Weights[i][j] = agent2.NN.Weights[i][j];
     }
 
-    loadAgents(numOfAgents, topCount, folderPath) {
-        this.createNewAgents(numOfAgents);
+    loadAgents(topCount, folderPath) {
         for (let i = 0; i < topCount; i++)
             this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '.txt');
     }

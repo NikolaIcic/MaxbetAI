@@ -83,12 +83,11 @@ export default class NeuralNetwork {
         if (weights.length - 1 != TotalWeightsLength)
             throw Error('On NN set weights: invalid weights');
         let n = 0;
-        this.Weights.forEach(weightLayer => {
-            weightLayer.forEach(weight => {
-                weight = weights[n];
+        for (let i = 0; i < this.Weights.length; i++)
+            for (let j = 0; j < this.Weights[i].length; j++) {
+                this.Weights[i][j] = weights[n];
                 n++;
-            });
-        });
+            }
     }
 }
 

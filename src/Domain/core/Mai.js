@@ -30,7 +30,7 @@ export default class Mai {
         this.Evolution.createNewAgents(NumOfAgents);
 
         if (!newTraining)
-            this.Evolution.loadAgents(TopAgents, './Agents' + folderName);
+            this.Evolution.loadAgents(NumOfAgents,TopAgents, './Agents/' + folderName);
 
         let generations = 0;
         let saveCounter = 0;

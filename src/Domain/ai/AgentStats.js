@@ -21,6 +21,7 @@ export default class AgentStats {
         tickets.forEach(t => {
             this.Money -= defaultBet;
             let ticketPassed = true;
+            let quote = 1;
             for (let i = 0; i < t.ticket.Games.length; i++) {
                 this.TotalGamesPlayed++;
                 if (t.predictions[i].Result === true) {
@@ -31,7 +32,9 @@ export default class AgentStats {
                 }
                 else
                     ticketPassed = false;
+                quote *= t.predictions[i].Quote;
             }
+            t.ticket.Quote = quote;
             if (ticketPassed) {
                 if (t.ticket.Quote != 1)
                     this.CorrectTicketsPredicted++;

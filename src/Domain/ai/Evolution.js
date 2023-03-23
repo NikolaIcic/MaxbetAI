@@ -73,17 +73,17 @@ export default class Evolution {
                 agent1.NN.Weights[i][j] = agent2.NN.Weights[i][j];
     }
 
-    loadAgents(count, folderPath) {
-        for (let i = 0; i < count; i++)
-            this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '/data.txt');
-        this.createNewAgents(count - topAgentsCount);
+    loadAgents(numOfAgents, topCount, folderPath) {
+        this.createNewAgents(numOfAgents);
+        for (let i = 0; i < topCount; i++)
+            this.Agents[i].loadData(folderPath + '/Agent' + (i + 1) + '.txt');
     }
 
     saveAgents(folderPath, count, property) {
-        if(!fs.existsSync(folderPath))
+        if (!fs.existsSync(folderPath))
             fs.mkdirSync(folderPath)
         this.Agents.sort((a, b) => b[property] - a[property]);
-        for (let i = 0; i < count; i++){
+        for (let i = 0; i < count; i++) {
             this.Agents[i].saveData(folderPath + '/Agent' + (i + 1) + '.txt');
             this.Agents[i].saveStats(folderPath + '/Agent' + (i + 1) + '.json');
         }

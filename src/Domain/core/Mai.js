@@ -1,7 +1,7 @@
 import Evolution from "../ai/Evolution.js";
 import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
-import fs from 'fs';
+import fs, { readdirSync } from 'fs';
 import AgentStats from "../ai/AgentStats.js";
 
 const NumOfAgents = 100;
@@ -34,7 +34,7 @@ export default class Mai {
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 20) {
+        while (generations < 50) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
@@ -52,7 +52,9 @@ export default class Mai {
     }
 
     getAgentGroups() {
-
+        return readdirSync('./Agents', { withFileTypes: true })
+            .filter(file => file.isDirectory())
+            .map(dir => dir.name)
     }
 
     getAgents(group) {

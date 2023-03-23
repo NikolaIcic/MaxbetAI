@@ -1,9 +1,14 @@
 import Mai from "./Domain/core/Mai.js";
 import express from "express";
+import cors from 'cors';
 import { Worker } from 'worker_threads';
 
 const app = express()
 const port = 3690;
+
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 app.get('/mai/start', (req, res) => {
     res.send('Mai started learning');
@@ -25,7 +30,8 @@ app.get('/mai/test', (req, res) => {
 })
 
 app.get('/mai/agents/groups', (req, res) => {
-    res.json(['Test1', 'Test2', 'Test3']);
+    const mai = new Mai();
+    res.json(mai.getAgentGroups());
 })
 
 app.get('/mai/agents/list/:agentGroup', (req, res) => {

@@ -73,7 +73,7 @@ export default class Agent {
                 text += weight + ',';
             });
         });
-        fs.writeFile(filepath, text, () => { });
+        fs.writeFileSync(filepath, text);
     }
 
     loadData(filepath) {
@@ -92,7 +92,7 @@ export default class Agent {
             tickets: this.TicketsPlayed
         };
         let data = JSON.stringify(stats);
-        fs.writeFile(filepath, data, () => { });
+        fs.writeFileSync(filepath, data);
         this.TicketsPlayed = [];
     }
 }

@@ -1,5 +1,4 @@
 - Backend development
-    - Get agents data
     - Pass TAG ratio as parameter
 
 - Frontend development

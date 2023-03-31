@@ -34,7 +34,7 @@ export default class Mai {
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 20) {
+        while (generations < 30) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
@@ -75,8 +75,6 @@ export default class Mai {
     }
 
     test() {
-        this.Evolution.Agents.forEach(agent => {
-            console.log(agent.Name, agent.Fitness);
-        });
+        console.log('Test done!');
     }
 }

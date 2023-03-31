@@ -85,7 +85,7 @@ export default class NeuralNetwork {
         let n = 0;
         for (let i = 0; i < this.Weights.length; i++)
             for (let j = 0; j < this.Weights[i].length; j++) {
-                this.Weights[i][j] = weights[n];
+                this.Weights[i][j] = parseFloat(weights[n]);
                 n++;
             }
     }

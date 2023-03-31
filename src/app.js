@@ -14,7 +14,7 @@ app.get('/mai/start', (req, res) => {
     res.send('Mai started learning');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
-            newTraining: true,
+            newTraining: false,
             folderName: 'TestGeneration'
         }
     });
@@ -25,7 +25,7 @@ app.get('/mai/start', (req, res) => {
 
 app.get('/mai/test', (req, res) => {
     const mai = new Mai();
-    mai.test2();
+    mai.test();
     res.send('Test Done');
 })
 

@@ -34,7 +34,7 @@ export default class Mai {
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 20) {
+        while (true) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);
@@ -65,6 +65,10 @@ export default class Mai {
         for (let i = 0; i < TopAgents; i++)
             agents.push(this.loadAgentStats('./Agents/' + group + '/Agent' + (i + 1) + '.json'))
         return agents;
+    }
+
+    getAgent(group,index){
+        return this.loadAgentStats('./Agents/' + group + '/Agent' + index + '.json');
     }
 
     loadAgentStats(filepath) {

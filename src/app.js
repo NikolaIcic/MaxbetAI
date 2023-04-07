@@ -40,6 +40,14 @@ app.get('/mai/agents/list/:agentGroup', (req, res) => {
     res.json(result);
 })
 
+app.get('/mai/agents/load/:group/:index', (req, res) => {
+    const mai = new Mai();
+    let group = req.params.group;
+    let index = req.params.index;
+    let result = mai.getAgent(group, index);
+    res.json(result);
+})
+
 app.listen(port, () => {
     console.log(`Mai app hosted on port ${port}`)
 })

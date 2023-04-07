@@ -1,6 +1,13 @@
 - Backend development
-    - Fix slow learning run time when loading old agent data
+    - Create new generation with specified evo algorithm
 - Frontend development
+    - Show individual agent stats
+        - Show graphs for stats
+        - Show games history
+    - Create new generation
+    - Play page
+        - Single agent can play ticket
+        - Multiple agents can play ticket
 
 - Logic development:
     - Aggresion

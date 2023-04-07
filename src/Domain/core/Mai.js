@@ -5,10 +5,10 @@ import fs, { readdirSync } from 'fs';
 import AgentStats from "../ai/AgentStats.js";
 
 const NumOfAgents = 100;
-const TicketsPerRound = 100;
+const TicketsPerRound = 300;
 const GamesPerTicket = 6;
 const TopAgents = 5;
-const SaveAgentsInterval = 10;
+const SaveAgentsInterval = 50;
 
 export default class Mai {
     constructor() {
@@ -34,7 +34,7 @@ export default class Mai {
 
         let generations = 0;
         let saveCounter = 0;
-        while (generations < 30) {
+        while (generations < 20) {
             this.createTickets();
             this.Tickets.forEach(ticket => {
                 this.Evolution.agentsPlayTicket(ticket);

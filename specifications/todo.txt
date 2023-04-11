@@ -1,4 +1,7 @@
 - Backend development
+    - Average games per tickets
+    - Prediction rates
+    - Clear tickets/fitness/earnings/ after one round of ticket playing
     - Create new generation with specified evo algorithm
 - Frontend development
     - Show individual agent stats

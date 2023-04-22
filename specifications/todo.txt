@@ -1,18 +1,17 @@
 - Backend development
-    - Average games per tickets
-    - Prediction rates
-    - Clear tickets/fitness/earnings/ after one round of ticket playing
+    - Check average quote per ticket
     - Create new generation with specified evo algorithm
+    
 - Frontend development
-    - Show individual agent stats
-        - Show graphs for stats
-        - Show games history
+    - Ticket history
     - Create new generation
+    - Learning page
     - Play page
         - Single agent can play ticket
         - Multiple agents can play ticket
 
 - Logic development:
+    - Clear tickets/fitness/earnings/ after one round of ticket playing
     - Aggresion
     - Earning
     - CombinationC new method (A + B / 2)

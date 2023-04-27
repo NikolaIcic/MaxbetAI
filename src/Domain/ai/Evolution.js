@@ -95,6 +95,12 @@ export default class Evolution {
         });
     }
 
+    resetAllAgentStats() {
+        this.Agents.forEach(agent => {
+            agent.resetAllStats();
+        })
+    }
+
     calculateAgentsFitness() {
         this.Agents.forEach(agent => {
             let fitness = 0;

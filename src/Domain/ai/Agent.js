@@ -63,6 +63,19 @@ export default class Agent {
         });
     }
 
+    resetAllStats() {
+        this.GamesPlayed = 0;
+        this.Predictions = [];
+        this.CurrentQuote = 1;
+        this.TicketsPlayed = [];
+        this.TotalGames = 0;
+        this.TotalTickets = 0;
+        this.CorrectGamePredictions = 0;
+        this.CorrectTicketPredictions = 0;
+        this.HighestQuotePredicted = 1;
+        this.TotalQuotesSum = 0;
+    }
+
     saveData(filepath) {
         if (this.Name == 'Agent')
             this.Name = generateRandomName();

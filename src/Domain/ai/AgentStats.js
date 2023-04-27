@@ -1,4 +1,4 @@
-const ticketStatsCount = 10;
+const ticketStatsCount = 5;
 const defaultBet = 100;
 
 export default class AgentStats {

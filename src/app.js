@@ -14,8 +14,9 @@ app.get('/mai/start', (req, res) => {
     res.send('Mai started learning');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
-            newTraining: false,
-            folderName: 'TestGeneration'
+            newTraining: true,
+            folderName: 'TestGeneration',
+            fitnessAlgorithm: 'Earnings'
         }
     });
     worker.on('message', (result) => {

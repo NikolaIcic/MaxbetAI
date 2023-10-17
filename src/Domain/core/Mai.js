@@ -26,7 +26,7 @@ export default class Mai {
         }
     }
 
-    learn(newTraining, folderName) {
+    learn(newTraining, folderName, fitnessAlgorithm) {
         this.Evolution.createNewAgents(NumOfAgents);
 
         if (!newTraining)
@@ -41,7 +41,7 @@ export default class Mai {
                 this.Evolution.agentsPlayTicket(ticket);
             });
 
-            this.Evolution.calculateAgentsFitness();
+            this.Evolution.calculateAgentsFitness(fitnessAlgorithm);
             if (saveCounter == SaveAgentsInterval) {
                 this.Evolution.saveAgents('./Agents/' + folderName, TopAgents, 'Fitness');
                 saveCounter = 0;

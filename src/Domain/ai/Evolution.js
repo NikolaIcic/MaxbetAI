@@ -1,6 +1,9 @@
 import Agent from "./Agent.js";
 import fs from 'fs'
 
+const averageHighEarningsExpected = 200;
+const fitnessMaxCap = 18;
+
 export default class Evolution {
     constructor() {
         this.Agents = [];
@@ -101,24 +104,38 @@ export default class Evolution {
         })
     }
 
-    calculateAgentsFitness() {
+    calculateAgentsFitness(type) {
         this.Agents.forEach(agent => {
-            let fitness = 0;
-            let gameWR = agent.CorrectGamePredictions / agent.TotalGames;
-            let ticketWR = agent.CorrectTicketPredictions / agent.TotalTickets;
-            let averageQuote = agent.TotalQuotesSum / agent.TotalTickets;
-            if (averageQuote > 25)
-                averageQuote = 25;
-            let highestCorrect = agent.HighestQuotePredicted;
-            if (highestCorrect > 100)
-                highestCorrect = 100;
-
-            fitness += gameWR * 3000;
-            fitness += ticketWR * 10000;
-            fitness += averageQuote * 50;
-            fitness += highestCorrect * 10;
-            agent.Fitness = fitness;
+            if (type == 'Earnings')
+                agent.Fitness = agent.Earnings;
+            else if (type == 'Mixed')
+                agent.Fitness = this.calculateAgentFintessMixed(agent);
+            else
+                agent.Fitness = this.calculateAgentFintessDefault(agent);
         });
+    }
+
+    calculateAgentFintessDefault(agent) {
+        let fitness = 0;
+        let gameWR = agent.CorrectGamePredictions / agent.TotalGames;
+        let ticketWR = agent.CorrectTicketPredictions / agent.TotalTickets;
+        let averageQuote = agent.TotalQuotesSum / agent.TotalTickets;
+        if (averageQuote > 25)
+            averageQuote = 25;
+        let highestCorrect = agent.HighestQuotePredicted;
+        if (highestCorrect > 100)
+            highestCorrect = 100;
+
+        fitness += gameWR * 3500;
+        fitness += ticketWR * 10000;
+        fitness += averageQuote * 80;
+        fitness += highestCorrect * 25;
+        return fitness;
+    }
+
+    calculateAgentFintessMixed(agent) {
+        let wr = this.calculateAgentFintessDefault(agent);
+        return wr / fitnessMaxCap + agent.Earnings / averageHighEarningsExpected;
     }
 }
 

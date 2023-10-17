@@ -114,6 +114,7 @@ export default class RandomGame {
         else
             res = 2;
 
+        // mb re-calculate this based on goal chances (quotes) with some offset?
         let goals;
         let r2 = Math.floor(Math.random() * 100);
         if (r2 < 20)
@@ -270,7 +271,7 @@ const getPercentChanceFromQuote = (quote) => {
     return (100 / quote) * maxbetMagicNumber;
 }
 
-const Fx = (x, n) => {
+const Fx = (x, n) => { // Integral solution
     return 7 * x - (Math.abs(x - n) * (x - n) / 2);
 }
 

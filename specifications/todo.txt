@@ -1,14 +1,15 @@
 - Backend development
     - Check average quote per ticket
-    - Create new generation with specified evo algorithm
-    
+    - Create new generation with specified evo algorithm endpoint
+    - Agent play ticket endpoint
+
 - Frontend development
-    - Ticket history
+    - Play page
+        - Can create ticket
+        - Single agent can play ticket
+        - Multiple agents can play ticket        
     - Create new generation
     - Learning page
-    - Play page
-        - Single agent can play ticket
-        - Multiple agents can play ticket
 
 - Logic development:
     - Clear tickets/fitness/earnings/ after one round of ticket playing

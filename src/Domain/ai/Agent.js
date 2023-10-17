@@ -2,6 +2,8 @@ import generateRandomName from "./generateRandomName.js";
 import NeuralNetwork from "./NeuralNetwork.js"
 import fs from 'fs'
 
+const defaultBet = 100;
+
 export default class Agent {
     constructor() {
         this.Name = 'Agent'
@@ -20,6 +22,7 @@ export default class Agent {
         this.HighestQuotePredicted = 1;
         this.TotalQuotesSum = 0;
         this.Fitness = 0;
+        this.Earnings = 0;
     }
 
     predictTicketOutcome() {
@@ -55,6 +58,10 @@ export default class Agent {
             if (this.CurrentQuote > this.HighestQuotePredicted)
                 this.HighestQuotePredicted = this.CurrentQuote;
         }
+        if(correct)
+            this.Earnings += this.CurrentQuote * defaultBet - defaultBet;
+        else
+            this.Earnings -= defaultBet;
         this.TotalQuotesSum += this.CurrentQuote;
 
         this.TicketsPlayed.push({
@@ -74,6 +81,7 @@ export default class Agent {
         this.CorrectTicketPredictions = 0;
         this.HighestQuotePredicted = 1;
         this.TotalQuotesSum = 0;
+        this.Earnings = 0;
     }
 
     saveData(filepath) {

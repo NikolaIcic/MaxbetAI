@@ -16,7 +16,7 @@ app.get('/mai/start', (req, res) => {
         workerData: {
             newTraining: true,
             folderName: 'TestGeneration',
-            fitnessAlgorithm: 'Earnings'
+            fitnessAlgorithm: 'Default'
         }
     });
     worker.on('message', (result) => {

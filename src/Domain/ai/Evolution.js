@@ -2,7 +2,8 @@ import Agent from "./Agent.js";
 import fs from 'fs'
 
 const averageHighEarningsExpected = 200;
-const fitnessMaxCap = 18;
+const fitnessLimiter = 16;
+const earningsMaxCap = 1500;
 
 export default class Evolution {
     constructor() {
@@ -126,16 +127,19 @@ export default class Evolution {
         if (highestCorrect > 100)
             highestCorrect = 100;
 
-        fitness += gameWR * 3500;
-        fitness += ticketWR * 10000;
-        fitness += averageQuote * 80;
-        fitness += highestCorrect * 25;
+        fitness += gameWR * 3000; 
+        fitness += ticketWR * 10000; 
+        fitness += averageQuote * 60;
+        fitness += highestCorrect * 15;
         return fitness;
     }
 
     calculateAgentFintessMixed(agent) {
-        let wr = this.calculateAgentFintessDefault(agent);
-        return wr / fitnessMaxCap + agent.Earnings / averageHighEarningsExpected;
+        let wr = this.calculateAgentFintessDefault(agent) / fitnessLimiter;
+        let earned = agent.Earnings / averageHighEarningsExpected;
+        if(earned > earningsMaxCap)
+            earned = earningsMaxCap;
+        return wr + earned;
     }
 }
 

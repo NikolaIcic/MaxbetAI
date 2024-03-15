@@ -43,6 +43,7 @@ export default class AgentStats {
                 quote *= t.predictions[i].Quote;
                 this.markPrediction(t.predictions[i]);
             }
+            quoteSum += quote;
             t.ticket.Quote = quote;
             if (ticketPassed) {
                 if (t.ticket.Quote != 1)
@@ -53,24 +54,22 @@ export default class AgentStats {
                 if (t.ticket.Quote > highestQuote)
                     highestQuote = t.ticket.Quote;
             }
-            if (t.ticket.Quote != 1)
-                quoteSum += t.ticket.Quote;
         });
 
         this.HighestQuotePredicted = highestQuote;
-        this.AverageQuote = quoteSum / (this.TotalTicketsPlayed - this.TicketsNotPlayed);
+        this.AverageQuote = quoteSum / this.TotalTicketsPlayed;
         this.AverageGamesPerTicket = (this.TotalGamesPlayed - this.GamesNotPlayed) / (this.TotalTicketsPlayed - this.TicketsNotPlayed);
     }
 
-    markPrediction(prediction){
-        let index = this.PredictionRates.findIndex(x=>x.name == prediction.Name)
-        if(index == -1){
+    markPrediction(prediction) {
+        let index = this.PredictionRates.findIndex(x => x.name == prediction.Name)
+        if (index == -1) {
             this.PredictionRates.push({
-                name:prediction.Name,
-                count:1
+                name: prediction.Name,
+                count: 1
             });
         }
         else
-        this.PredictionRates[index].count++;
+            this.PredictionRates[index].count++;
     }
 }

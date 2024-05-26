@@ -1,0 +1,19 @@
+#Entities
+    - Ticket
+        - Games
+        - Quote
+        - Bet
+        - Result
+        + Calculate Quote
+        + Calcutate Win
+    - Game 
+        - ID ??
+        - Match Name (should be scraped)
+        - Predictions
+        - Prediction
+        - Result
+        + Get Prediction Result
+    - Prediction
+        - Name
+        - Quote
+        - Result (bool)

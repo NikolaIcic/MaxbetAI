@@ -1,0 +1,22 @@
+- Backend development
+    - Check average quote per ticket
+    - Create new generation with specified evo algorithm endpoint
+    - Agent play ticket endpoint
+
+- Frontend development
+    - Play page
+        - Can create ticket
+        - Single agent can play ticket
+        - Multiple agents can play ticket        
+    - Create new generation
+    - Learning page
+
+- Logic development:
+    - Clear tickets/fitness/earnings/ after one round of ticket playing
+    - Aggresion
+    - Earning
+    - CombinationC new method (A + B / 2)
+    - CombinationD (A OR B)
+    - Speed up code/ remove unnecessary assignments
+    - Paralel processing / multithreading
+    - Enchance randomGame algorithm

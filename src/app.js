@@ -6,11 +6,14 @@ import { Worker } from 'worker_threads';
 const app = express()
 const port = 3690;
 
+let workers = [];
+let learningGroups = [];
+
 app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
-app.get('/mai/start', (req, res) => {
+app.get('/mai/learning/start', (req, res) => {
     res.send('Mai started learning');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
@@ -19,9 +22,16 @@ app.get('/mai/start', (req, res) => {
             fitnessAlgorithm: 'Default'
         }
     });
+    workers.push(worker);
+    learningGroups.push({name:'TestGeneration',learningAlgorithm:'Default',id:learningGroups.length});
+
     worker.on('message', (result) => {
         console.log(result);
     })
+})
+
+app.get('/mai/learning/list', (req, res) => {
+    res.json(learningGroups);
 })
 
 app.get('/mai/test', (req, res) => {

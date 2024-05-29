@@ -29,6 +29,8 @@ export default class Mai {
     learn(newTraining, folderName, fitnessAlgorithm) {
         this.Evolution.createNewAgents(NumOfAgents);
 
+        this.checkIfGenerationExists(folderName, fitnessAlgorithm);
+
         if (!newTraining)
             this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
 
@@ -49,6 +51,34 @@ export default class Mai {
             this.Evolution.createNextGenerationAgents(NumOfAgents - TopAgents, TopAgents, 'Fitness');
             generations++;
             saveCounter++;
+        }
+    }
+
+    getLearningGroups() {
+        if (!fs.existsSync('./Agents'))
+            return [];
+        let folders = readdirSync('./Agents', { withFileTypes: true })
+            .filter(file => file.isDirectory())
+            .map(dir => dir.name);
+        let res = [];
+        folders.forEach(folder => {
+            let rawdata = fs.readFileSync('./Agents/' + folder + '/Generation.json');
+            let data = JSON.parse(rawdata);
+            res.push(data);
+        });
+        return res;
+    }
+
+    checkIfGenerationExists(folderName, fitnessAlgorithm) {
+        if (!fs.existsSync('./Agents'))
+            fs.mkdirSync('./Agents');
+        if (!fs.existsSync('./Agents/' + folderName)) {
+            fs.mkdirSync('./Agents/' + folderName)
+            let data = JSON.stringify({
+                folderName: folderName,
+                fitnessAlgorithm: fitnessAlgorithm
+            });
+            fs.writeFileSync('./Agents/' + folderName + '/Generation.json', data);
         }
     }
 
@@ -85,9 +115,5 @@ export default class Mai {
 
         this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
         this.Evolution.agentsPlayTicket(ticket);
-    }
-
-    test() {
-        console.log('Test done!');
     }
 }

@@ -13,13 +13,13 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
-app.get('/mai/learning/start', (req, res) => {
+app.get('/mai/learning/start/:name/:algorithm', (req, res) => {
     res.send('Mai started learning');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
             newTraining: true,
-            folderName: 'TestGeneration',
-            fitnessAlgorithm: 'Default'
+            folderName: req.params.name,
+            fitnessAlgorithm: req.params.algorithm
         }
     });
     workers.push(worker);
@@ -31,13 +31,13 @@ app.get('/mai/learning/start', (req, res) => {
 })
 
 app.get('/mai/learning/list', (req, res) => {
-    res.json(learningGroups);
+    const mai = new Mai();
+    const groups = mai.getLearningGroups();
+    res.send(groups);
 })
 
 app.get('/mai/test', (req, res) => {
-    const mai = new Mai();
-    mai.test();
-    res.send('Test Done');
+    console.log(test);
 })
 
 app.get('/mai/agents/groups', (req, res) => {

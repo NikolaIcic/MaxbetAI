@@ -30,11 +30,13 @@ export default class Mai {
         this.Evolution.createNewAgents(NumOfAgents);
 
         this.checkIfGenerationExists(folderName, fitnessAlgorithm);
+        let learningGroup = this.getLearningGroups().find(x => x.folderName == folderName);
+        this.updateLearningGroup(folderName, { ...learningGroup, learning: true, generation: newTraining ? 0 : learningGroup.generation })
 
         if (!newTraining)
             this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
 
-        let generations = 0;
+        let generation = newTraining ? 0 : learningGroup.generation;
         let saveCounter = 0;
         while (true) {
             this.Evolution.resetAllAgentStats();
@@ -45,11 +47,12 @@ export default class Mai {
 
             this.Evolution.calculateAgentsFitness(fitnessAlgorithm);
             if (saveCounter == SaveAgentsInterval) {
+                generation++;
                 this.Evolution.saveAgents('./Agents/' + folderName, TopAgents, 'Fitness');
+                this.updateLearningGroup(folderName, { ...learningGroup, generation: generation, learning: true });
                 saveCounter = 0;
             }
             this.Evolution.createNextGenerationAgents(NumOfAgents - TopAgents, TopAgents, 'Fitness');
-            generations++;
             saveCounter++;
         }
     }
@@ -69,6 +72,16 @@ export default class Mai {
         return res;
     }
 
+    updateLearningGroup(folderName, groupData) {
+        let data = JSON.stringify(groupData);
+        fs.writeFileSync('./Agents/' + folderName + '/Generation.json', data);
+    }
+
+    async stopStartLearningGroup(folderName, start = false) {
+        let learningGroup = this.getLearningGroups().find(x => x.folderName == folderName);
+        this.updateLearningGroup(folderName, { ...learningGroup, learning: start })
+    }
+
     checkIfGenerationExists(folderName, fitnessAlgorithm) {
         if (!fs.existsSync('./Agents'))
             fs.mkdirSync('./Agents');
@@ -76,7 +89,9 @@ export default class Mai {
             fs.mkdirSync('./Agents/' + folderName)
             let data = JSON.stringify({
                 folderName: folderName,
-                fitnessAlgorithm: fitnessAlgorithm
+                fitnessAlgorithm: fitnessAlgorithm,
+                generation: 0,
+                learning: true,
             });
             fs.writeFileSync('./Agents/' + folderName + '/Generation.json', data);
         }

@@ -7,14 +7,23 @@ const app = express()
 const port = 3690;
 
 let workers = [];
-let learningGroups = [];
+
+const initialSetup = () => {
+    let maiInitial = new Mai();
+    let learningGroups = maiInitial.getLearningGroups();
+    learningGroups.forEach(group => {
+        maiInitial.stopStartLearningGroup(group.folderName);
+    });
+}
+initialSetup();
 
 app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
 app.get('/mai/learning/start/:name/:algorithm', (req, res) => {
-    res.send('Mai started learning');
+    if (workers.find(x => x.groupName == req.params.name))
+        return res.send('error');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
             newTraining: true,
@@ -22,12 +31,21 @@ app.get('/mai/learning/start/:name/:algorithm', (req, res) => {
             fitnessAlgorithm: req.params.algorithm
         }
     });
-    workers.push(worker);
-    learningGroups.push({name:'TestGeneration',learningAlgorithm:'Default',id:learningGroups.length});
+    workers.push({ worker: worker, groupName: req.params.name });
+    const mai = new Mai();
+    mai.stopStartLearningGroup(req.params.name, true);
+    res.send('success');
+})
 
-    worker.on('message', (result) => {
-        console.log(result);
-    })
+app.get('/mai/learning/stop/:name', (req, res) => {
+    if (!workers.find(x => x.groupName == req.params.name))
+        return res.send('error');;
+    const mai = new Mai();
+    let currentWorker = workers.find(x => x.groupName == req.params.name).worker;
+    currentWorker.terminate();
+    workers = workers.filter(x => x.groupName != req.params.name);
+    mai.stopStartLearningGroup(req.params.name);
+    res.send('success');
 })
 
 app.get('/mai/learning/list', (req, res) => {

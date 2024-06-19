@@ -21,12 +21,12 @@ app.use(cors({
     origin: 'http://localhost:3000'
 }));
 
-app.get('/mai/learning/start/:name/:algorithm', (req, res) => {
+app.get('/mai/learning/start/:name/:algorithm/:newTraining', (req, res) => {
     if (workers.find(x => x.groupName == req.params.name))
         return res.send('error');
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
-            newTraining: true,
+            newTraining: req.params.newTraining,
             folderName: req.params.name,
             fitnessAlgorithm: req.params.algorithm
         }

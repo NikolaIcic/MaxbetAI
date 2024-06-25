@@ -24,9 +24,10 @@ app.use(cors({
 app.get('/mai/learning/start/:name/:algorithm/:newTraining', (req, res) => {
     if (workers.find(x => x.groupName == req.params.name))
         return res.send('error');
+    let newTraining = req.params.newTraining === 'true';
     const worker = new Worker('./src/Workers/learning.js', {
         workerData: {
-            newTraining: req.params.newTraining,
+            newTraining: newTraining,
             folderName: req.params.name,
             fitnessAlgorithm: req.params.algorithm
         }
@@ -55,7 +56,8 @@ app.get('/mai/learning/list', (req, res) => {
 })
 
 app.get('/mai/test', (req, res) => {
-    console.log(test);
+    const mai = new Mai();
+    mai.learn(false, 'TestGeneration', 'Default');
 })
 
 app.get('/mai/agents/groups', (req, res) => {

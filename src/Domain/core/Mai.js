@@ -32,7 +32,6 @@ export default class Mai {
         this.checkIfGenerationExists(folderName, fitnessAlgorithm);
         let learningGroup = this.getLearningGroups().find(x => x.folderName == folderName);
         this.updateLearningGroup(folderName, { ...learningGroup, learning: true, generation: newTraining ? 0 : learningGroup.generation })
-
         if (!newTraining)
             this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
 

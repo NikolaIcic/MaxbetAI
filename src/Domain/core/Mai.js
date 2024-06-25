@@ -3,6 +3,7 @@ import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
 import fs, { readdirSync } from 'fs';
 import AgentStats from "../ai/AgentStats.js";
+import path from "path";
 
 const NumOfAgents = 100;
 const TicketsPerRound = 100;
@@ -110,6 +111,35 @@ export default class Mai {
         for (let i = 0; i < TopAgents; i++)
             agents.push(this.loadAgentStats('./Agents/' + group + '/Agent' + (i + 1) + '.json'))
         return agents;
+    }
+
+    getAllAgents() {
+        if (!fs.existsSync('./Agents'))
+            return [];
+        let folders = readdirSync('./Agents', { withFileTypes: true })
+            .filter(file => file.isDirectory())
+            .map(dir => dir.name);
+        let res = [];
+        folders.forEach(folder => {
+            let files = readdirSync('./Agents/' + folder, { withFileTypes: true })
+            .filter(file => file.isFile())
+            .map(dir => dir.name);
+            files = files.filter(x=>x.includes('.txt'));
+            let agentNames = [];
+            files.forEach(file => {
+                let data = fs.readFileSync('./Agents/' + folder + '/' + file, 'utf8', function (err, data) {
+                    if (err) throw err;
+                    return data;
+                });
+                let name = data.split('\n')[0];
+                agentNames.push(name)
+            });
+            res.push({
+                name:folder,
+                agents:agentNames
+            });
+        });
+        return res;
     }
 
     getAgent(group, index) {

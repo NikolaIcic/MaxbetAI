@@ -67,7 +67,13 @@ app.get('/mai/agents/groups', (req, res) => {
 
 app.get('/mai/agents/list/:agentGroup', (req, res) => {
     const mai = new Mai();
-    let result = mai.getAgents(req.params.agentGroup)
+    let result = mai.getAgents(req.params.agentGroup);
+    res.json(result);
+})
+
+app.get('/mai/agents/list', (req, res) => {
+    const mai = new Mai();
+    let result = mai.getAllAgents();
     res.json(result);
 })
 

@@ -17,6 +17,8 @@ const initialSetup = () => {
 }
 initialSetup();
 
+app.use(express.json());
+
 app.use(cors({
     origin: 'http://localhost:3000'
 }));
@@ -83,6 +85,12 @@ app.get('/mai/agents/load/:group/:index', (req, res) => {
     let index = req.params.index;
     let result = mai.getAgent(group, index);
     res.json(result);
+})
+
+app.post('/mai/play', (req, res) => {
+    const mai = new Mai();
+    let predictions = mai.agentsPlayTicket(req.body.groups,req.body.games);
+    res.json(predictions);
 })
 
 app.listen(port, () => {

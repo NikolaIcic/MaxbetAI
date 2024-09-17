@@ -3,7 +3,7 @@ import RandomGame from "../random/randomGame.js";
 import Ticket from "./Ticket.js";
 import fs, { readdirSync } from 'fs';
 import AgentStats from "../ai/AgentStats.js";
-import path from "path";
+import { group } from "console";
 
 const NumOfAgents = 100;
 const TicketsPerRound = 100;
@@ -122,9 +122,9 @@ export default class Mai {
         let res = [];
         folders.forEach(folder => {
             let files = readdirSync('./Agents/' + folder, { withFileTypes: true })
-            .filter(file => file.isFile())
-            .map(dir => dir.name);
-            files = files.filter(x=>x.includes('.txt'));
+                .filter(file => file.isFile())
+                .map(dir => dir.name);
+            files = files.filter(x => x.includes('.txt'));
             let agentNames = [];
             files.forEach(file => {
                 let data = fs.readFileSync('./Agents/' + folder + '/' + file, 'utf8', function (err, data) {
@@ -135,8 +135,8 @@ export default class Mai {
                 agentNames.push(name)
             });
             res.push({
-                name:folder,
-                agents:agentNames
+                name: folder,
+                agents: agentNames
             });
         });
         return res;
@@ -153,11 +153,24 @@ export default class Mai {
         return stats;
     }
 
-    agentsPlayTicket(ticket, group) {
-        if (!fs.existsSync('./Agents/' + group))
-            return 'Group not found';
-
-        this.Evolution.loadAgents(TopAgents, './Agents/' + folderName);
+    agentsPlayTicket(groups, games) {
+        let ticket = new Ticket();
+        ticket.Games = games;
+        this.Evolution.createNewAgents(groups.length * TopAgents);
+        for (let i = 0; i < groups.length; i++)
+            this.Evolution.loadAgents(TopAgents, './Agents/' + groups[i].name, i * TopAgents);
         this.Evolution.agentsPlayTicket(ticket);
+        let res = [];
+        for (let j = 0; j < groups.length; j++) {
+            for (let i = 0; i < TopAgents; i++) {
+                if (groups[j].checked[i])
+                    res.push({
+                        name: this.Evolution.Agents[i + j * TopAgents].Name,
+                        predictions: this.Evolution.Agents[i + j * TopAgents].Predictions,
+                        group: groups[j].name
+                    });
+            }
+        }
+        return res;
     }
 }
